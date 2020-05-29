@@ -10,6 +10,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+      with:
+        submodules: true
+
     - name: Install Dependencies
       run : |
         sudo apt-get update
@@ -18,8 +21,20 @@ jobs:
 
     - name: Build GCC
       run: |
+        rm -rf build/
         mkdir build
         cd build
         CC=gcc CXX=g++ cmake -DCMAKE_BUILD_TYPE=Release ..
         make clean
         make -j
+        cd ..
+
+    - name: Build Clang
+      run: |
+        rm -rf build/
+        mkdir build
+        cd build
+        CC=clang CXX=clang++ cmake -DCMAKE_BUILD_TYPE=Release ..
+        make clean
+        make -j
+        cd ..
