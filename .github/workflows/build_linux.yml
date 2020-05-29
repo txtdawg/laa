@@ -1,0 +1,25 @@
+name: Linux Build
+
+on:
+  push: {}
+  pull_request: {}
+
+jobs:
+  build:
+    runs-on: ubuntu-lastest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install Dependencies
+      run : |
+        sudo apt-get update
+        sudo apt-get remove -y clang-6.0 libclang-common-6.0-dev libclang1-6.0 libllvm6.0
+        sudo apt-get install -y clang clang-format clang-tidy libsdl2-dev libfftw3-dev librtaudio-dev cmake
+
+    - name: Build GCC
+      run: |
+        mkdir build
+        cd build
+        CC=gcc CXX=g++ cmake -DCMAKE_BUILD_TYPE=Release ..
+        make clean
+        make -j
