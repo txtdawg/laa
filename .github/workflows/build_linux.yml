@@ -15,9 +15,10 @@ jobs:
 
     - name: Install Dependencies
       run : |
-        sudo apt-get update
-        sudo apt-get remove -y clang-6.0 libclang-common-6.0-dev libclang1-6.0 libllvm6.0
-        sudo apt-get install -y clang clang-format clang-tidy libsdl2-dev libfftw3-dev librtaudio-dev cmake
+        sudo bash -c 'deb http://us.archive.ubuntu.com/ubuntu focal main universe" >> /etc/apt/sources.list.d/unstable.list'
+        sudo apt-get -y update
+        sudo apt-get -y remove clang-6.0 libclang-common-6.0-dev libclang1-6.0 libllvm6.0
+        sudo apt-get -y install -t focal clang clang-format clang-tidy libsdl2-dev libfftw3-dev librtaudio-dev
 
     - name: Build GCC
       run: |
